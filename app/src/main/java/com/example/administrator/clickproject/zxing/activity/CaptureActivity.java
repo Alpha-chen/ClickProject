@@ -3,6 +3,8 @@ package com.example.administrator.clickproject.zxing.activity;
 import com.example.administrator.clickproject.R;
 import com.example.administrator.clickproject.zxing.camera.CameraManager;
 import com.example.administrator.clickproject.zxing.decoding.CaptureActivityHandler;
+import com.example.administrator.clickproject.zxing.decoding.DecodeHandler;
+import com.example.administrator.clickproject.zxing.decoding.DecodeThread;
 import com.example.administrator.clickproject.zxing.decoding.InactivityTimer;
 import com.example.administrator.clickproject.zxing.view.ViewfinderView;
 import com.google.zxing.BarcodeFormat;
@@ -21,7 +23,9 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -35,7 +39,7 @@ import android.widget.Toast;
  * Initial the camera
  * @author Ryan.Tang
  */
-public class CaptureActivity extends Activity implements Callback {
+public final class CaptureActivity extends Activity implements Callback {
 
 	private CaptureActivityHandler handler;
 	private ViewfinderView viewfinderView;
@@ -48,6 +52,9 @@ public class CaptureActivity extends Activity implements Callback {
 	private static final float BEEP_VOLUME = 0.10f;
 	private boolean vibrate;
 	private Button cancelScanButton;
+    public  final static int REQUEST_CODE=13;
+
+    private String TAG=this.getClass().getSimpleName();
 
 	/** Called when the activity is first created. */
 	@Override
@@ -57,7 +64,6 @@ public class CaptureActivity extends Activity implements Callback {
 		CameraManager.init(getApplication());
 		initView();
 	}
-
 	private void initView() {
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 		cancelScanButton = (Button) this.findViewById(R.id.btn_cancel_scan);
@@ -65,32 +71,29 @@ public class CaptureActivity extends Activity implements Callback {
 		inactivityTimer = new InactivityTimer(this);
 		final Switch flash = (Switch) findViewById(R.id.btn_open_flash);
         flash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    CameraManager.get().LightOn();
-                    flash.setTextColor(Color.RED);
-                }else {
-                    CameraManager.get().LightOff();
-                    flash.setTextColor(Color.GREEN);
-                }
-            }
-        });
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					CameraManager.get().LightOn();
+					flash.setTextColor(Color.RED);
+				} else {
+					CameraManager.get().LightOff();
+					flash.setTextColor(Color.GREEN);
+				}
+			}
+		});
 
         Button album= (Button) findViewById(R.id.btn_album_scan);
         album.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            Intent  intent =  new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
-            Intent wraperIntent=Intent.createChooser(intent,null);
-            startActivityForResult(wraperIntent,0);
-            }
-        });
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+				intent.setType("image/*");
+				Intent wraperIntent = Intent.createChooser(intent, null);
+				startActivityForResult(wraperIntent, REQUEST_CODE);
+			}
+		});
 	}
-
-
-
 
     @Override
 	protected void onResume() {
@@ -116,12 +119,11 @@ public class CaptureActivity extends Activity implements Callback {
 		
 		//quit the scan view
 		cancelScanButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				CaptureActivity.this.finish();
-			}
-		});
+            @Override
+            public void onClick(View v) {
+                CaptureActivity.this.finish();
+            }
+        });
 	}
 
 	@Override
@@ -139,7 +141,20 @@ public class CaptureActivity extends Activity implements Callback {
 		inactivityTimer.shutdown();
 		super.onDestroy();
 	}
-	
+
+	/**
+	 *
+	 * 从图库中进行获取二维码扫描得到的结果传给resultActivity
+	 *
+	 * @param rawResult The contents of the barcode.
+	 */
+	public void handleDecode(Result rawResult, int args) {
+		if (null == rawResult) {
+			Toast.makeText(this,"没有信息",Toast.LENGTH_LONG).show();
+			return;
+		}
+		Toast.makeText(this,rawResult.getText(),Toast.LENGTH_LONG).show();
+	}
 	/**
 	 * Handler scan result
 	 * @param result
@@ -159,9 +174,9 @@ public class CaptureActivity extends Activity implements Callback {
 			resultIntent.putExtras(bundle);
 			this.setResult(RESULT_OK, resultIntent);
 		}
-		CaptureActivity.this.finish();
+//		CaptureActivity.this.finish();
 	}
-	
+
 	private void initCamera(SurfaceHolder surfaceHolder) {
 		try {
 			CameraManager.get().openDriver(surfaceHolder);
@@ -255,19 +270,33 @@ public class CaptureActivity extends Activity implements Callback {
 		}
 	};
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		
+
 		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				
 			}
 		}).start();
-	};
 
-
-
-
-
+        if(null==data) {
+            Toast.makeText(this, "你没有选择图片", Toast.LENGTH_LONG).show();
+            return;
+        }
+        switch (requestCode){
+            case REQUEST_CODE:
+				if (handler == null) {
+					handler = new CaptureActivityHandler(this, decodeFormats,
+							characterSet);
+				}
+				DecodeHandler decodeHandler= handler.getDecodeHandler();
+				Log.d(TAG,data.getDataString());
+				Message message = decodeHandler.obtainMessage(R.id.decode,1,0,data.getDataString());
+				message.sendToTarget();
+				handler=null;
+                break;
+            default:
+                break;
+        }
+        };
 }

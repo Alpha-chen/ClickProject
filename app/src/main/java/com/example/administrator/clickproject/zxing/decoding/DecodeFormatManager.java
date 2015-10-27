@@ -25,7 +25,7 @@ import android.content.Intent;
 import android.net.Uri;
 import com.google.zxing.BarcodeFormat;
 
-final class DecodeFormatManager {
+public final class DecodeFormatManager {
 
   private static final Pattern COMMA_PATTERN = Pattern.compile(",");
 

@@ -250,11 +250,6 @@ public  class CameraManager {
       Rect rect = new Rect(getFramingRect());
       Point cameraResolution = configManager.getCameraResolution();
       Point screenResolution = configManager.getScreenResolution();
-      //modify here
-//      rect.left = rect.left * cameraResolution.x / screenResolution.x;
-//      rect.right = rect.right * cameraResolution.x / screenResolution.x;
-//      rect.top = rect.top * cameraResolution.y / screenResolution.y;
-//      rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
       rect.left = rect.left * cameraResolution.y / screenResolution.x;
       rect.right = rect.right * cameraResolution.y / screenResolution.x;
       rect.top = rect.top * cameraResolution.x / screenResolution.y;
@@ -264,26 +259,6 @@ public  class CameraManager {
     return framingRectInPreview;
   }
 
-  /**
-   * Converts the result points from still resolution coordinates to screen coordinates.
-   *
-   * @param points The points returned by the Reader subclass through Result.getResultPoints().
-   * @return An array of Points scaled to the size of the framing rect and offset appropriately
-   *         so they can be drawn in screen coordinates.
-   */
-  /*
-  public Point[] convertResultPoints(ResultPoint[] points) {
-    Rect frame = getFramingRectInPreview();
-    int count = points.length;
-    Point[] output = new Point[count];
-    for (int x = 0; x < count; x++) {
-      output[x] = new Point();
-      output[x].x = frame.left + (int) (points[x].getX() + 0.5f);
-      output[x].y = frame.top + (int) (points[x].getY() + 0.5f);
-    }
-    return output;
-  }
-   */
 
   /**
    * A factory method to build the appropriate LuminanceSource object based on the format

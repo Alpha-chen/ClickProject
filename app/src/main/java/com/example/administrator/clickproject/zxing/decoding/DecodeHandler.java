@@ -22,20 +22,24 @@ import com.example.administrator.clickproject.zxing.camera.CameraManager;
 import com.example.administrator.clickproject.zxing.camera.PlanarYUVLuminanceSource;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
+import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
 import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 
 import java.util.Hashtable;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
-final class DecodeHandler extends Handler {
+public final class DecodeHandler extends Handler {
 
 	private static final String TAG = DecodeHandler.class.getSimpleName();
 
@@ -48,11 +52,17 @@ final class DecodeHandler extends Handler {
 		this.activity = activity;
 	}
 
+
 	@Override
 	public void handleMessage(Message message) {
 		if (message.what == R.id.decode) {
 			//Log.d(TAG, "Got decode message");
-			decode((byte[]) message.obj, message.arg1, message.arg2);
+			// 此处的添加 判断是直接扫描还是图库选择
+			if (1==message.arg1){
+				decodePic(message.obj.toString());
+			} else {
+				decode((byte[]) message.obj, message.arg1, message.arg2);
+			}
 		}else if (message.what == R.id.quit) {
 			Looper.myLooper().quit();
 		}
@@ -102,6 +112,62 @@ final class DecodeHandler extends Handler {
 		} else {
 			Message message = Message.obtain(activity.getHandler(), R.id.decode_failed);
 			message.sendToTarget();
+		}
+	}
+
+
+	private void decodePic(String path) {
+//		long start = System.currentTimeMillis();
+		Bitmap bm = BitmapFactory.decodeFile(path);
+		if (bm == null) {
+			Log.d("deCode", "-----------------------null");
+			return;
+		}
+		Hashtable<DecodeHintType, String> hints = new Hashtable<DecodeHintType, String>();
+		hints.put(DecodeHintType.CHARACTER_SET, "UTF8"); // 设置二维码内容的编码
+		MultiFormatReader multiFormatReader = new MultiFormatReader();
+		multiFormatReader.setHints(hints);
+		LuminanceSource source = new BitmapLuance(bm);
+		BinaryBitmap bit = new BinaryBitmap(new HybridBinarizer(source));
+		Result rawResult = null;
+		try {
+			rawResult = multiFormatReader.decodeWithState(bit);
+
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			multiFormatReader.reset();
+		}
+		Handler handler = activity.getHandler();
+		if ( null !=rawResult) {
+			if (handler != null) {
+				// 此时是网CaptureActivityHandler发送信息 "1"的含义变化了，注意！！！
+				Message message = Message.obtain(handler, R.id.decode_succeeded, 1, 3, rawResult);
+				message.sendToTarget();
+			} else if (handler == null) {
+				handler =activity.getHandler();
+				// "1"表示成功 "3"补位子
+				Message message = Message.obtain(handler, R.id.decode_succeeded, 1, 3, rawResult);
+				message.sendToTarget();
+			}
+		} else {
+			if (null == handler) {
+				handler =activity.getHandler();
+				Message message = Message.obtain(handler, R.id.decode_failed, 3, 3);
+				Bundle bundle = new Bundle();
+				bundle.putInt("faile", 3);
+				message.setData(bundle);
+				message.sendToTarget();
+			} else
+			{
+				// "0"表示在图库中进行解析的时候没有信息
+				Message message = Message.obtain(handler, R.id.decode_failed, 3, 3);
+				Bundle bundle = new Bundle();
+				bundle.putInt("faile", 3);
+				message.setData(bundle);
+				message.sendToTarget();
+			}
+
 		}
 	}
 
