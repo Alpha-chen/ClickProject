@@ -62,12 +62,12 @@ public final class DecodeHandler extends Handler {
 		if (message.what == R.id.decode) {
 			//Log.d(TAG, "Got decode message");
 			// 此处的添加 判断是直接扫描还是图库选择
-			if (1==message.arg1){
+			if (1 == message.arg1) {
 				decodePic(message.obj.toString());
 			} else {
 				decode((byte[]) message.obj, message.arg1, message.arg2);
 			}
-		}else if (message.what == R.id.quit) {
+		} else if (message.what == R.id.quit) {
 			Looper.myLooper().quit();
 		}
 	}
@@ -121,9 +121,9 @@ public final class DecodeHandler extends Handler {
 
 
 	private void decodePic(String uri) {
-//		long start = System.currentTimeMillis();
 		Bitmap bm = null;
 		try {
+			// 从返回的URI中获取bitmap
 			bm = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), Uri.parse(uri));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -148,36 +148,24 @@ public final class DecodeHandler extends Handler {
 			multiFormatReader.reset();
 		}
 		Handler handler = activity.getHandler();
-		if ( null !=rawResult) {
+		if (null != rawResult) {
 			if (handler != null) {
 				// 此时是网CaptureActivityHandler发送信息 "1"的含义变化了，注意！！！
 				Message message = Message.obtain(handler, R.id.decode_succeeded, 1, 3, rawResult);
 				message.sendToTarget();
 			} else if (handler == null) {
 				// "1"表示成功 "3"补位子
-				handler = new CaptureActivityHandler(activity);
+				handler = new CaptureActivityHandler(activity); //  创建CaptureActivityHandler
 				Message message = Message.obtain(handler, R.id.decode_succeeded, 1, 3, rawResult);
 				message.sendToTarget();
 			}
 		} else {
-			if (null == handler) {
-				handler =activity.getHandler();
-				Message message = Message.obtain(handler, R.id.decode_failed, 3, 3);
-				Bundle bundle = new Bundle();
-				bundle.putInt("faile", 3);
-				message.setData(bundle);
-				message.sendToTarget();
-			} else
-			{
-				// "0"表示在图库中进行解析的时候没有信息
-				Message message = Message.obtain(handler, R.id.decode_failed, 3, 3);
-				Bundle bundle = new Bundle();
-				bundle.putInt("faile", 3);
-				message.setData(bundle);
-				message.sendToTarget();
-			}
-
+			handler = new CaptureActivityHandler(activity); //  创建CaptureActivityHandler
+			Message message = Message.obtain(handler, R.id.decode_failed, 3, 3);
+			Bundle bundle = new Bundle();
+			bundle.putInt("faile", 3);
+			message.setData(bundle);
+			message.sendToTarget();
 		}
 	}
-
 }
