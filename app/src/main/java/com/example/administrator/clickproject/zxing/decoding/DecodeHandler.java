@@ -32,9 +32,7 @@ import com.google.zxing.common.HybridBinarizer;
 import java.io.IOException;
 import java.util.Hashtable;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -64,9 +62,10 @@ public final class DecodeHandler extends Handler {
 			// 此处的添加 判断是直接扫描还是图库选择
 			if (1 == message.arg1) {
 				decodePic(message.obj.toString());
-			} else {
+			}else {
 				decode((byte[]) message.obj, message.arg1, message.arg2);
 			}
+
 		} else if (message.what == R.id.quit) {
 			Looper.myLooper().quit();
 		}
@@ -120,6 +119,10 @@ public final class DecodeHandler extends Handler {
 	}
 
 
+	/***
+	 * 从图库中选取图片完成解码
+	 * @param uri
+	 */
 	private void decodePic(String uri) {
 		Bitmap bm = null;
 		try {
@@ -168,4 +171,5 @@ public final class DecodeHandler extends Handler {
 			message.sendToTarget();
 		}
 	}
+
 }

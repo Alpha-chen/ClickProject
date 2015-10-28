@@ -16,7 +16,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 /**
- * 二维码生成工具类
+ * 二维码生成工具类 二维码中带有图片
  */
 public class QRCodeUtil {
     /**
@@ -29,7 +29,7 @@ public class QRCodeUtil {
      * @param filePath  用于存储二维码图片的文件路径
      * @return 生成二维码及保存文件是否成功
      */
-    public static Bitmap createQRImage(String content, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
+    public static Bitmap createQRImage(String content, int widthPix, int heightPix, Bitmap logoBm, String filePath,String fileName) {
         try {
             if (content == null || "".equals(content)) {
                 return null;
@@ -65,7 +65,7 @@ public class QRCodeUtil {
                 bitmap = addLogo(bitmap, logoBm);
             }
             //必须使用compress方法将bitmap保存到文件中再进行读取。直接返回的bitmap是没有任何压缩的，内存消耗巨大！
-            boolean temp=bitmap != null && bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(filePath+"/"+"test.jpeg"));
+            boolean temp=bitmap != null && bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(filePath+fileName));
             if (temp){
                 return  bitmap;
             }
