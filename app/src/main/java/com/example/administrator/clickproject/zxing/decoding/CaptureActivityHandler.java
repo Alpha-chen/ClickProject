@@ -62,6 +62,11 @@ public final class CaptureActivityHandler extends Handler {
 		CameraManager.get().startPreview();
 		restartPreviewAndDecode();
 	}
+	public CaptureActivityHandler(CaptureActivity activity) {
+		this.activity = activity;
+		state = State.SUCCESS;
+		decodeThread = null;
+	}
 
 	public DecodeHandler getDecodeHandler() {
 		return (DecodeHandler) decodeThread.getHandler();

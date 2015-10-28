@@ -29,14 +29,18 @@ import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 
+import java.io.IOException;
 import java.util.Hashtable;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.Log;
 
 public final class DecodeHandler extends Handler {
@@ -116,9 +120,14 @@ public final class DecodeHandler extends Handler {
 	}
 
 
-	private void decodePic(String path) {
+	private void decodePic(String uri) {
 //		long start = System.currentTimeMillis();
-		Bitmap bm = BitmapFactory.decodeFile(path);
+		Bitmap bm = null;
+		try {
+			bm = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), Uri.parse(uri));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		if (bm == null) {
 			Log.d("deCode", "-----------------------null");
 			return;
@@ -145,8 +154,8 @@ public final class DecodeHandler extends Handler {
 				Message message = Message.obtain(handler, R.id.decode_succeeded, 1, 3, rawResult);
 				message.sendToTarget();
 			} else if (handler == null) {
-				handler =activity.getHandler();
 				// "1"表示成功 "3"补位子
+				handler = new CaptureActivityHandler(activity);
 				Message message = Message.obtain(handler, R.id.decode_succeeded, 1, 3, rawResult);
 				message.sendToTarget();
 			}
