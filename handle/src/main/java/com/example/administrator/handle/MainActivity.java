@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-    private MyHandler  myHandler;
+    private static MyHandler  myHandler;
 
     private Looper looper;
     TextView tv;
@@ -39,22 +39,24 @@ public class MainActivity extends Activity {
      * t如果调用该方法的线程的生命周期与该acitivity的生命周期 不一致 就可能导致内存泄漏
      * @return
      */
-    public  Handler getHandler(){
+    public static Handler getHandler(){
       return myHandler;
     }
+
     private void initView() {
         tv= (TextView) findViewById(R.id.my_test);
         findViewById(R.id.download).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MyThread(MainActivity.this).run();
+                MyThread  myThread=new MyThread(MainActivity.this);
+                myThread.start();
             }
         });
 
     }
 
     public void updateUI(Bundle bundle){
-        tv.setText(bundle.getString("content"));
+        tv.setText(bundle.getString("data"));
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

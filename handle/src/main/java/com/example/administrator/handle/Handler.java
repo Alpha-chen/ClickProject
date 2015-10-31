@@ -11,14 +11,17 @@ import android.os.Message;
  */
 class MyHandler extends Handler {
 
-    public Activity activity;
-    public MyHandler(Activity activity){
+    public MainActivity activity;
+    public MyHandler(MainActivity activity){
         this.activity=activity;
     }
 
 
     @Override
     public void handleMessage(Message msg) {
+        if (1==msg.arg1){
+            activity.updateUI(msg.getData());
+        }
         super.handleMessage(msg);
     }
 }
