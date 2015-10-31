@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ClickProject.iml" filepath="$PROJECT_DIR$/ClickProject.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ZxingScan/app.iml" filepath="$PROJECT_DIR$/ZxingScan/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/handle/handle.iml" filepath="$PROJECT_DIR$/handle/handle.iml" />
     </modules>
   </component>

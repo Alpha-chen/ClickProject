@@ -1,19 +1,21 @@
 package com.example.administrator.handle;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
     private static MyHandler  myHandler;
-
-    private Looper looper;
+    Dialog dialog=null;
     TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class MainActivity extends Activity {
       return myHandler;
     }
 
+
     private void initView() {
         tv= (TextView) findViewById(R.id.my_test);
         findViewById(R.id.download).setOnClickListener(new View.OnClickListener() {
@@ -50,12 +53,18 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 MyThread  myThread=new MyThread(MainActivity.this);
                 myThread.start();
+                dialog = new Dialog(MainActivity.this);
+                dialog.setTitle("正在下载....");
+                dialog.setContentView(new ProgressBar(MainActivity.this));
+                dialog.setCancelable(false);
+                dialog.show();
             }
         });
 
     }
 
     public void updateUI(Bundle bundle){
+        dialog.dismiss();
         tv.setText(bundle.getString("data"));
     }
     @Override

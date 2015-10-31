@@ -9,17 +9,23 @@
         android:id="@+id/download"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="测试"
-        />
-
-    <TextView
-        android:id="@+id/my_test"
-        android:layout_below="@id/download"
-        android:text="@string/hello_world"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:text="测试"/>
+
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/download"
+        android:layout_centerHorizontal="true">
 
+        <TextView
+            android:id="@+id/my_test"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignLeft="@+id/download"
+            android:layout_alignStart="@+id/download"
+            android:text="@string/hello_world"/>
 
+    </ScrollView>
 </RelativeLayout>

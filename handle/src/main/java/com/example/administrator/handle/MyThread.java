@@ -1,8 +1,5 @@
 package com.example.administrator.handle;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,60 +9,63 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 
 /**
  * Created by xupangen
  * on 2015/10/29.
  * e-mail: xupangen@ffrj.net
  */
-public class MyThread extends  Thread {
+public class MyThread extends Thread {
 
-    private  long  currentTime;
+    private long currentTime;
     private MainActivity activity;
 
-    public MyThread(MainActivity activity){
-        this.activity=activity;
-        currentTime= System.currentTimeMillis();
-        Looper.prepare();
-    }
+    public MyThread(MainActivity activity) {
+        this.activity = activity;
+        currentTime = System.currentTimeMillis();
 
+    }
     @Override
     public void run() {
-        URL url=null;
-        HttpURLConnection urlConnection=null;
-        FileOutputStream fileOutputStream=null;
+        Looper.prepare();
+        URL url = null;
+        HttpURLConnection urlConnection = null;
+        FileOutputStream fileOutputStream = null;
         InputStream inputStream = null;
         try {
-            File file  = new File(Environment.getExternalStorageDirectory()+"/my.txt");
-            if(!file.exists()){
+            File file = new File(Environment.getExternalStorageDirectory() + "/my.txt");
+            if (!file.exists()) {
                 file.createNewFile();
             }
-            fileOutputStream  = new FileOutputStream(Environment.getExternalStorageDirectory()+"/my.txt");
-            url= new URL("http://blog.sina.com.cn/s/blog_4b2e0e6101015j55.html");
-            urlConnection= (HttpURLConnection) url.openConnection();
-            urlConnection.connect();
-            inputStream= urlConnection.getInputStream();
-            byte[] a ;
-            StringBuilder sb= new StringBuilder();
-            while (inputStream.read()!=-1){
+            fileOutputStream = new FileOutputStream(file);
+            url = new URL("http://www.bubuko.com/infodetail-589156.html");
+//          url= new URL("http://blog.csdn.net/aboutjunjun/article/details/9040827");
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setDoInput(true);
+            urlConnection.getContentEncoding();
+//          urlConnection.setRequestMethod("POST");
+            urlConnection.setConnectTimeout(1000);
+            inputStream = urlConnection.getInputStream();
+            InputStreamReader reader = new InputStreamReader(inputStream, "UTF-8");
+
+
+//          sb.append(inputStream.read());
+           int  n=0;
+            if (inputStream.read() != -1) {
                 fileOutputStream.write(inputStream.read());
-//                bufferedOutputStream.write(a,0,0);
-                sb.append(inputStream.read());
+                n++;
             }
-            Looper.loop();
-            System.out.print(sb.toString());
+            char[] buffer = new char[n];
+            reader.read(buffer);
             Message message = Message.obtain();
             Bundle bundle = new Bundle();
-            message.arg1=1;
-            bundle.putString("data", sb.toString());
+            message.arg1 = 1;
+            bundle.putString("data", new String(buffer));
             message.setData(bundle);
             activity.getHandler().sendMessage(message);
 
@@ -77,5 +77,7 @@ public class MyThread extends  Thread {
             e.printStackTrace();
         }
         super.run();
+        Looper.loop();
     }
+
 }

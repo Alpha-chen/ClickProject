@@ -1,6 +1,5 @@
 package com.example.administrator.handle;
 
-import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 
@@ -12,14 +11,15 @@ import android.os.Message;
 class MyHandler extends Handler {
 
     public MainActivity activity;
-    public MyHandler(MainActivity activity){
-        this.activity=activity;
+
+    public MyHandler(MainActivity activity) {
+        this.activity = activity;
     }
 
 
     @Override
     public void handleMessage(Message msg) {
-        if (1==msg.arg1){
+        if (1 == msg.arg1) {
             activity.updateUI(msg.getData());
         }
         super.handleMessage(msg);
