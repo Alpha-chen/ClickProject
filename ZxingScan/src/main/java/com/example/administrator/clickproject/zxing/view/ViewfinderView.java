@@ -16,6 +16,10 @@
 
 package com.example.administrator.clickproject.zxing.view;
 
+import com.example.administrator.clickproject.zxing.camera.CameraManager;
+import com.example.administrator.zxingscan.R;
+import com.google.zxing.ResultPoint;
+
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -27,10 +31,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
-
-import com.example.administrator.clickproject.R;
-import com.example.administrator.clickproject.zxing.camera.CameraManager;
-import com.google.zxing.ResultPoint;
 
 /**
  * This view is overlaid on top of the camera preview. It adds the viewfinder rectangle and partial
@@ -61,8 +61,7 @@ public final class ViewfinderView extends View {
     // Initialize these once for performance rather than calling them every time in onDraw().
     paint = new Paint();
     Resources resources = getResources();
-    maskColor = resources.getColor(R.
-            color.viewfinder_mask);
+    maskColor = resources.getColor(R.color.viewfinder_mask);
     resultColor = resources.getColor(R.color.result_view);
     frameColor = resources.getColor(R.color.viewfinder_frame);
     laserColor = resources.getColor(R.color.viewfinder_laser);

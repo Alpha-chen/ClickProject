@@ -16,10 +16,10 @@
 
 package com.example.administrator.clickproject.zxing.decoding;
 
-import com.example.administrator.clickproject.R;
 import com.example.administrator.clickproject.zxing.activity.CaptureActivity;
 import com.example.administrator.clickproject.zxing.camera.CameraManager;
 import com.example.administrator.clickproject.zxing.view.ViewfinderResultPointCallback;
+import com.example.administrator.zxingscan.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 

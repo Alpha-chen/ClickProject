@@ -1,1 +1,1 @@
-include ':app', ':handle'
+include ':app', ':handle', ':zxingscan'

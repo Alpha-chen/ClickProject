@@ -1,12 +1,11 @@
 package com.example.administrator.clickproject.zxing.activity;
 
-import com.example.administrator.clickproject.R;
 import com.example.administrator.clickproject.zxing.camera.CameraManager;
 import com.example.administrator.clickproject.zxing.decoding.CaptureActivityHandler;
 import com.example.administrator.clickproject.zxing.decoding.DecodeHandler;
-import com.example.administrator.clickproject.zxing.decoding.DecodeThread;
 import com.example.administrator.clickproject.zxing.decoding.InactivityTimer;
 import com.example.administrator.clickproject.zxing.view.ViewfinderView;
+import com.example.administrator.zxingscan.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 

@@ -1,9 +1,9 @@
 package com.example.administrator.clickproject.ericssonlabs;
 
-import com.example.administrator.clickproject.R;
 import com.example.administrator.clickproject.zxing.activity.CaptureActivity;
 import com.example.administrator.clickproject.zxing.decoding.BitmapLuance;
 import com.example.administrator.clickproject.zxing.encoding.QRCodeUtil;
+import com.example.administrator.zxingscan.R;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.LuminanceSource;
