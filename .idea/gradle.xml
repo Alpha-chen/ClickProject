@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/ZxingScan" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/handle" />
+            <option value="$PROJECT_DIR$/weather_animation" />
           </set>
         </option>
       </GradleProjectSettings>

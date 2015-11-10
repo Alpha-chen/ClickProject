@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/ClickProject.iml" filepath="$PROJECT_DIR$/ClickProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/handle/handle.iml" filepath="$PROJECT_DIR$/handle/handle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/weather_animation/weather_animation.iml" filepath="$PROJECT_DIR$/weather_animation/weather_animation.iml" />
       <module fileurl="file://$PROJECT_DIR$/ZxingScan/zxingscan.iml" filepath="$PROJECT_DIR$/ZxingScan/zxingscan.iml" />
     </modules>
   </component>

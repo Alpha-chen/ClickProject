@@ -1,1 +1,1 @@
-include ':app', ':handle', ':zxingscan'
+include ':app', ':handle', ':zxingscan', ':weather_animation'
