@@ -3,4 +3,12 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string-array name="wether">
+        <item>晴天</item>
+        <item>多云</item>
+        <item>阴天</item>
+        <item>小雨</item>
+        <item>中雨</item>
+        <item>大雨</item>
+    </string-array>
 </resources>
