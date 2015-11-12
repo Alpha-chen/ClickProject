@@ -11,6 +11,7 @@
         android:background="@drawable/fine_day_cloud1"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:onClick="rotateyAnimRun"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="97dp"/>
     <ImageView

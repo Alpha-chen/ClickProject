@@ -2,11 +2,17 @@ package com.example.administrator.weather_animation;
 
 import com.example.administrator.weather_animation.util.BaseActivity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * 晴天
@@ -30,8 +36,30 @@ public class QingWeatherAcitivty extends BaseActivity implements Animation.Anima
         setContentView(R.layout.qing);
         initView();
         initEvent();
+
     }
 
+    public void rotateyAnimRun(final View view)
+    {
+        ObjectAnimator//
+                .ofFloat(findCloud1, "translationX", 0.0F, 1000.0F)//
+                .setDuration(500)//
+                .start();
+//        ObjectAnimator anim = ObjectAnimator//
+//                .ofFloat(view, "zhy", 1.0F,  0.2F)//
+//                .setDuration(500);//
+//        anim.start();
+//
+//        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator animation) {
+//                float cVal = (Float) animation.getAnimatedValue();
+//                view.setAlpha(cVal);
+//                view.setScaleX(cVal);
+//                view.setScaleY(cVal);
+//            }
+//        });
+    }
     @Override
     public void initView() {
         super.initView();
@@ -40,21 +68,15 @@ public class QingWeatherAcitivty extends BaseActivity implements Animation.Anima
     }
 
     @Override
+    public void initData() {
+        super.initData();
+
+    }
+
+    @Override
     public void initEvent() {
         super.initEvent();
-//        TranslateAnimation translateAnimation=new TranslateAnimation(Animation.RELATIVE_TO_SELF,
-//                (float) -0.5, Animation.RELATIVE_TO_SELF,
-//                (float) 1.7, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
-        animation1= AnimationUtils.loadAnimation(QingWeatherAcitivty.this,R.anim.fine_day_cloud1_tranlate);
-//        translateAnimation.setDuration(15000);
-//        translateAnimation.setRepeatMode(TranslateAnimation.Rs);
-        animation1.setAnimationListener(this);
-        findCloud1.setAnimation(animation1);
-        animation2=AnimationUtils.loadAnimation(QingWeatherAcitivty.this,R.anim.fine_day_cloud2_tranlate);
 
-        animation2.setAnimationListener(this);
-//      findCloud2.setAnimation(animation2);
-        findCloud2.startAnimation(animation2);
     }
 
 
