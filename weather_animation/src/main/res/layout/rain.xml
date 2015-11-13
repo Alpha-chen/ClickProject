@@ -3,31 +3,26 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/bg0_fine_day">
-
-<LinearLayout
-    android:id="@+id/qing_ll"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:onClick="translateAnimRun"
-    android:orientation="horizontal"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentStart="true"
-    android:layout_marginBottom="92dp">
+              android:background="@drawable/bg_heavy_rain_night">
     <ImageView
-        android:id="@+id/fine_day_cloud1"
+        android:id="@+id/rain_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/raindrop_xl"
+        android:layout_centerHorizontal="true"
+        android:onClick="rain"
+        />
 
-        android:background="@drawable/fine_day_cloud1"
-      />
+
     <ImageView
         android:id="@+id/fine_day_cloud2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/fine_day_cloud2"
-       />
-</LinearLayout>
+        android:layout_marginTop="53dp"
+        android:onClick="rain"
+        android:layout_below="@+id/rain_day"
+        android:layout_alignParentEnd="true"/>
     <TextView
         android:text="晴"
         android:textColor="@color/light_blue"

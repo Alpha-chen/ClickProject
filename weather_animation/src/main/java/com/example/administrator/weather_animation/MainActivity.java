@@ -51,6 +51,10 @@ public class MainActivity extends BaseActivity {
         }
         activity.add(QingWeatherAcitivty.class);
         activity.add(DuoYunAcitivity.class);
+        activity.add(DuoYunAcitivity.class);
+        activity.add(DuoYunAcitivity.class);
+        activity.add(DuoYunAcitivity.class);
+        activity.add(RainActivity.class);
         WeatherListAdapter weatherListAdapter = new WeatherListAdapter(MainActivity.this,data);
         weather_listView.setAdapter(weatherListAdapter);
         weather_listView.setOnItemClickListener(this);

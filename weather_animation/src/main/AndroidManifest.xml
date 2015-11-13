@@ -21,6 +21,9 @@
         <activity android:name=".DuoYunAcitivity"
                   android:label="DuoYunAcitivity">
         </activity>
+        <activity android:name=".RainActivity"
+            android:label="RainActivity">
+        </activity>
     </application>
 
 </manifest>

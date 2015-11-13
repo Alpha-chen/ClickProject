@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android">
+
     <translate
         android:repeatCount="infinite"
-        android:duration="25000"
-        android:fromXDelta="-300"
+        android:duration="24500"
+        android:fromXDelta="-10"
         android:fromYDelta="0"
         android:toXDelta="1000"
-        android:interpolator="@android:anim/linear_interpolator"
+        android:interpolator="@android:anim/anticipate_interpolator"
         android:toYDelta="0"/>
 </set>
