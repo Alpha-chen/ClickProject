@@ -42,11 +42,10 @@ public class RainActivity extends BaseActivity {
         float height= displayMetrics.heightPixels;
         float width=displayMetrics.widthPixels;
         ObjectAnimator objectAnimator =ObjectAnimator.ofFloat(rainxl,"translationY",-200.0f,height);
-        objectAnimator.setDuration(1500);
+        objectAnimator.setDuration(15000);
         objectAnimator.setRepeatCount(-1);
         objectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
         objectAnimator.setInterpolator(new DecelerateInterpolator());
-//        objectAnimator.start();
 
         ObjectAnimator rainCloudor=ObjectAnimator.ofFloat(rainCloud,"translationX",-20.0f,-width);
         rainCloudor.setDuration(20000);
