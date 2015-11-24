@@ -1,1 +1,1 @@
-include ':app', ':handle', ':zxingscan', ':weather_animation', ':lbs'
+include ':handle', ':zxingscan', ':weather_animation', ':pink_lbs_test'
