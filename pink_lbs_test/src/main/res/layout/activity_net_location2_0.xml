@@ -43,14 +43,14 @@
                     />
 
                 <TextView
-                    android:id="@+id/location_latlng_text"
+                    android:id="@+id/location_latlng_text2_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     />
 
                 <Button
-                    android:id="@+id/location_time_button"
+                    android:id="@+id/location_time_button2_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="修改定位时间"/>
@@ -67,7 +67,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/location_accurancy_text"
+                    android:id="@+id/location_accurancy_text2_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -84,7 +84,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/location_method_text"
+                    android:id="@+id/location_method_text2_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -101,7 +101,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/location_time_text"
+                    android:id="@+id/location_time_text2_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -118,7 +118,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/location_description_text"
+                    android:id="@+id/location_description_text2_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -136,7 +136,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/location_country_text"
+                    android:id="@+id/location_country_text2_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -153,7 +153,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/location_province_text"
+                    android:id="@+id/location_province_text2_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -170,7 +170,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/location_city_text"
+                    android:id="@+id/location_city_text2_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -187,7 +187,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/location_county_text"
+                    android:id="@+id/location_county_text2_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -204,7 +204,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/location_road_text"
+                    android:id="@+id/location_road_text2_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -221,7 +221,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/location_poi_text"
+                    android:id="@+id/location_poi_text2_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -238,7 +238,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/location_city_code_text"
+                    android:id="@+id/location_city_code_text2_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -255,7 +255,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/location_area_code_text"
+                    android:id="@+id/location_area_code_text2_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />

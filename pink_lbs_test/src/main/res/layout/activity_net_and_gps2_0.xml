@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical" >
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/map2_0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </com.amap.api.maps.MapView>
+
+    <TextView
+        android:id="@+id/location_errInfo_text2_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="#ff89ff"
+        android:layout_marginRight="50dp"
+        android:textColor="#A4ff99"
+        android:text="TextView"
+        android:visibility="gone"/>
+
+    <RadioGroup
+        android:id="@+id/gps_radio_group2_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#A4ff0020"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/gps_locate_button2_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="定位"
+            android:textColor="@android:color/black" />
+
+        <RadioButton
+            android:id="@+id/gps_follow_button2_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="跟随"
+            android:textColor="@android:color/black" />
+
+        <RadioButton
+            android:id="@+id/gps_rotate_button2_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="旋转"
+            android:textColor="@android:color/black" />
+    </RadioGroup>
+
+</FrameLayout>
