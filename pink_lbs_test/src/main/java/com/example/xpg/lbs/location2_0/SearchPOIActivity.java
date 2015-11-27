@@ -34,6 +34,7 @@ public class SearchPOIActivity extends BaseActivity {
             case  R.id.search_poi:
                 intent.setClass(SearchPOIActivity.this,POIListActivity.class);
                 startActivity(intent);
+                finish();
         }
     }
 

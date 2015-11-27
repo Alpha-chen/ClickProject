@@ -58,6 +58,7 @@ public class Main2_0Activity extends BaseActivity {
             case R.id.step32_0:
                 intent.setClass(Main2_0Activity.this, SearchPOIActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             default:
                 break;
