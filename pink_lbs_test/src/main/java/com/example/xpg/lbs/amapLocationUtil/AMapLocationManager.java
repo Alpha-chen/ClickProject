@@ -24,15 +24,18 @@ public class AMapLocationManager implements AMapLocationListener {
 
     public AMapLocationManager(Context context) {
         this.context = context;
-        this.callBack = (AMapLocationCallBack) context;
     }
 
     public AMapLocationManager(Context context, AMapLocationClientOption option) {
         this.context = context;
-        this.callBack = (AMapLocationCallBack) context;
         aMapLocationClientOption=option;
     }
 
+
+    public void setAMapLocationCallBack(AMapLocationCallBack callBackListener){
+        this.callBack=callBackListener;
+
+    }
     private AMapLocationClientOption getStandardOption() {
         AMapLocationClientOption aMapLocationClientOption1 = new AMapLocationClientOption();
         aMapLocationClientOption1.setOnceLocation(true);
@@ -64,6 +67,9 @@ public class AMapLocationManager implements AMapLocationListener {
      */
     public void startOnceLocation() {
         if (isDoing) {
+            if (null==callBack){
+                throw new NullPointerException("AMapLocationManager中AMapLocationCallBack为空");
+            }
             getInstance(aMapLocationClientOption);
             aMapLocationClient.startLocation();
             isDoing = false;

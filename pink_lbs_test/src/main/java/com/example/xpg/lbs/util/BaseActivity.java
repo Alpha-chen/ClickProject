@@ -2,6 +2,9 @@ package com.example.xpg.lbs.util;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,8 +15,15 @@ import android.widget.AdapterView;
  * on 2015/11/10.
  * e-mail: xupangen@ffrj.net
  */
-public class BaseActivity extends Activity implements View.OnClickListener,AdapterView.OnItemClickListener{
+public class BaseActivity extends Activity implements View.OnClickListener,AdapterView.OnItemClickListener,Handler.Callback{
     private String TAG=this.getClass().getSimpleName();
+    protected  Handler handler;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        handler=new Handler(this);
+    }
 
     /**
      *初始化布局
@@ -57,4 +67,8 @@ public class BaseActivity extends Activity implements View.OnClickListener,Adapt
     }
 
 
+    @Override
+    public boolean handleMessage(Message msg) {
+        return false;
+    }
 }

@@ -39,6 +39,7 @@
         <activity android:name=".location2_0.NetLocationActivity"/>
         <activity android:name=".location2_0.SearchPOIActivity"/>
         <activity android:name=".location2_0.POIListActivity"/>
+        <activity android:name=".SendEmailActivity"/>
         <!-- 定位需要的服务 -->
         <service android:name="com.amap.api.location.APSService"></service>
     </application>
