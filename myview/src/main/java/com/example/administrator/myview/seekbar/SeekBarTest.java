@@ -19,7 +19,7 @@ import android.widget.TextView;
  * on 2015/12/22.
  * e-mail: xupangen@ffrj.net
  */
-public class SeekBarTest extends Activity{
+public class SeekBarTest extends Activity {
     private SeekBar seekbar = null;
 
     private String startTimeStr = "19:30:33";
@@ -49,25 +49,26 @@ public class SeekBarTest extends Activity{
      */
     private float moveStep = 0;
     private View view;
-    private  ImageView moods;
+    private ImageView moods;
     RelativeLayout relativeLayout;
     ImageView imageView;
     ImageView imageView1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.b);
         screenWidth = getWindowManager().getDefaultDisplay().getWidth();
-        LayoutInflater inflater = LayoutInflater.from(SeekBarTest.this);
-        view=inflater.inflate(R.layout.mood,null);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.mood, null);
 //        view= LayoutInflater.from(this).inflate(R.layout.mood,null);
-        moods= (ImageView) view.findViewById(R.id.moods);
+        moods = (ImageView) view.findViewById(R.id.moods);
 
         text = new TextView(this);
         text.setBackgroundColor(Color.rgb(245, 245, 245));
         text.setTextColor(Color.rgb(0, 161, 229));
         text.setTextSize(16);
-         imageView= new ImageView(this);
+        imageView = new ImageView(this);
         imageView.setImageResource(R.drawable.seekbar_thumb);
         imageView.setAdjustViewBounds(true);
 //        imageView1= new ImageView(this);
@@ -83,10 +84,16 @@ public class SeekBarTest extends Activity{
 //
         layoutParams = new ViewGroup.LayoutParams(50, 50);
         textMoveLayout = (MoveLayout) findViewById(R.id.textLayout);
+        textMoveLayout.removeView(moods);
+        relativeLayout= new RelativeLayout(this);
+        relativeLayout.setHorizontalGravity(RelativeLayout.CENTER_HORIZONTAL);
+//        textMoveLayout.addView(moods);
+        relativeLayout.addView(imageView);
+//        relativeLayout.addView(moods);
 //        textMoveLayout.addView(view, layoutParams);
-        textMoveLayout.addView(imageView, layoutParams);
+        textMoveLayout.addView(relativeLayout, layoutParams);
 //        view.layout(0, 20, screenWidth, 80);
-        imageView.layout(0, 20, screenWidth-50, 80);
+        relativeLayout.layout(0, 20, screenWidth - 50, 80);
         /**
          * findView
          */
@@ -122,7 +129,7 @@ public class SeekBarTest extends Activity{
                                       boolean fromUser) {
             Log.d("seekBar运行时候progress=", progress + "");
 //            view.setBackgroundColor(Color.argb(progress * 10, 255, 255, 255));
-            imageView.layout((int) (progress * moveStep), 20, screenWidth, 80);
+            relativeLayout.layout((int) (progress * moveStep), 20, screenWidth, 80);
 //            text.layout((int) (progress * moveStep), 20, screenWidth, 80);
 
             text.setText(getCheckTimeBySeconds(progress, startTimeStr));
@@ -165,7 +172,6 @@ public class SeekBarTest extends Activity{
 
     /**
      * 根据当前选择的秒数还原时间点
-     *
      */
 
     private static String getCheckTimeBySeconds(int progress, String startTime) {
