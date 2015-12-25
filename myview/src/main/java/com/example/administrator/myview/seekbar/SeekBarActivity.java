@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -28,10 +29,12 @@ public class SeekBarActivity extends Activity {
      */
     private RelativeLayout textMoveLayout;
     private LinearLayout hahha;
+    private LinearLayout aaaa;
     /**
      * 托动条的移动步调
      */
     private float moveStep = 0;
+    private float moveSteps = 0;
     private ImageView imageView;
 
 
@@ -41,8 +44,7 @@ public class SeekBarActivity extends Activity {
         setContentView(R.layout.a);
         screenWidth = getWindowManager().getDefaultDisplay().getWidth();
         textMoveLayout = (RelativeLayout) findViewById(R.id.textLayout);
-        hahha = (LinearLayout) findViewById(R.id.hahha);
-        imageView = (ImageView) findViewById(R.id.testIV);
+        imageView = (ImageView) findViewById(R.id.menses_mood_select);
         /**
          * findView
          */
@@ -52,18 +54,31 @@ public class SeekBarActivity extends Activity {
          */
         seekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListenerImp());
 
+
+//        measure();
         searchVideos();
 
+    }
+
+    private void measure() {
+        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+        aaaa.measure(w, h);
+        int height =aaaa.getMeasuredHeight();
+        int width =aaaa.getMeasuredWidth();
+        Log.d(TAG,"width="+width+"\r\n"+"height="+height);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        moveStep = (((float) (screenWidth - (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics())
+        moveSteps = (((float) ( (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics())
         ) ));
-        moveStep = (float)((screenWidth-textMoveLayout.getWidth())/8);
+        Log.d(TAG,"aaadafsadfa="+textMoveLayout.getWidth());
+        moveStep = (float)((screenWidth-textMoveLayout.getWidth()-moveSteps)/8);
+
         Log.d(TAG,"screenWidth="+screenWidth);
-//        moveStep = (((float) (screenWidth / 9)));
+        moveStep=58; // 此处的60 是根据布局算出来的，涉及到分辨率多设备的问题，要使用单位转为进行设置
         Log.d(TAG + "moveStep", moveStep + "");
     }
 
@@ -81,16 +96,17 @@ public class SeekBarActivity extends Activity {
                                       boolean fromUser) {
 
             textMoveLayout.layout((int) (progress * moveStep), textMoveLayout.getTop(), textMoveLayout.getWidth() + (int) (progress * moveStep), textMoveLayout.getBottom());
-            imageView.setAlpha((float) (progress % 8 * 0.1));
             Log.d(TAG + "aa", progress % 8 * 0.1 + "");
             Log.d(TAG + "moveLayout-getWidth", textMoveLayout.getWidth() + "");
             Log.d(TAG + "moveLayout-PaddingWidth", textMoveLayout.getLeft() + "");
-            Log.d(TAG + "seekBarParent", hahha.getWidth() + "");
             Log.d(TAG + "seekBarWidth", seekBar.getWidth() + "");
-            Log.d(TAG + "moveLayout-width", textMoveLayout.getWidth() + "");
             Log.d(TAG + "moveLayout-height", textMoveLayout.getHeight() + "");
             Log.d(TAG + "tagProgress", progress + "");
-//            text.setText(getCheckTimeBySeconds(progress, startTimeStr));
+            setMyMood(progress);
+        }
+
+        private void setMyMood(int progress) {
+            imageView.setImageResource(ImageResArray.getMoodInfoIcon(progress));
         }
 
         // 表示进度条刚开始拖动，开始拖动时候触发的操作

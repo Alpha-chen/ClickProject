@@ -24,7 +24,7 @@
             android:minHeight="4dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:progressDrawable="@drawable/po_seekbar"
+            android:progressDrawable="@drawable/menses_seekbar_style"
             android:thumb="@drawable/aaaaa" />
     </LinearLayout>
 

@@ -6,10 +6,12 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -19,200 +21,112 @@ import android.widget.TextView;
  * on 2015/12/22.
  * e-mail: xupangen@ffrj.net
  */
-public class SeekBarTest extends Activity {
+public class SeekBarTest extends Activity implements SeekBar.OnSeekBarChangeListener{
+    private static String TAG = "TestMoodActivity----->";
     private SeekBar seekbar = null;
-
-    private String startTimeStr = "19:30:33";
-
-    private String endTimeStr = "21:23:21";
-
-    private TextView text, startTime, endTime;
-
-    /**
-     * 视频组中第一个和最后一个视频之间的总时长
-     */
-    private int totalSeconds = 0;
-
     /**
      * 屏幕宽度
      */
     private int screenWidth;
-
     /**
      * 自定义随着拖动条一起移动的空间
      */
-    private MoveLayout textMoveLayout;
-
-    private ViewGroup.LayoutParams layoutParams;
+    private LinearLayout textMoveLayouts;
+    private LinearLayout menses_mood_top;
+    private LinearLayout aaaa;
     /**
      * 托动条的移动步调
      */
     private float moveStep = 0;
-    private View view;
-    private ImageView moods;
-    RelativeLayout relativeLayout;
-    ImageView imageView;
-    ImageView imageView1;
+    private float moveSteps = 0;
+    private ImageView imageView;
+    TextView text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.b);
+        setContentView(R.layout.menses_mood_dialog1);
         screenWidth = getWindowManager().getDefaultDisplay().getWidth();
-        LayoutInflater inflater = LayoutInflater.from(SeekBarTest.this);
-        view = inflater.inflate(R.layout.mood, null);
-        moods = (ImageView) view.findViewById(R.id.moods);
-        layoutParams = new ViewGroup.LayoutParams(50, 50);
-        textMoveLayout = (MoveLayout) findViewById(R.id.textLayout);
-//        textMoveLayout.addView(view, layoutParams);
-//        textMoveLayout.removeView(view);
-        textMoveLayout.addView(view, layoutParams);
-//        view.layout(0, 20, screenWidth, 80);
-        view.layout(0, 0, screenWidth, 80);
+        textMoveLayouts = (LinearLayout) findViewById(R.id.menses_mood_select_layout);
+        imageView = (ImageView) findViewById(R.id.menses_mood_select);
+        menses_mood_top= (LinearLayout) findViewById(R.id.menses_mood_top);
+        text= new TextView(this);
+        RelativeLayout.LayoutParams layoutParams= new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        text.setTextColor(Color.argb(80,255,165,189));
+        text.setLayoutParams(layoutParams);
+        menses_mood_top.addView(text);
+        text.layout(100, 0, 80, 200);
         /**
          * findView
          */
-        seekbar = (SeekBar) findViewById(R.id.seekbar);
-        startTime = (TextView) findViewById(R.id.start_time);
-        endTime = (TextView) findViewById(R.id.end_time);
+        seekbar = (SeekBar) findViewById(R.id.menses_mood_select_seekBar);
         /**
          * setListener
          */
-        seekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListenerImp());
-
+        seekbar.setOnSeekBarChangeListener(this);
+//        measure();
         searchVideos();
 
     }
 
+    private void measure() {
+        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+        aaaa.measure(w, h);
+        int height =aaaa.getMeasuredHeight();
+        int width =aaaa.getMeasuredWidth();
+        Log.d(TAG, "width=" + width + "\r\n" + "height=" + height);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        moveSteps = (((float) ( (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics())
+        ) ));
+        Log.d(TAG,"aaadafsadfa="+textMoveLayouts.getWidth());
+        moveStep = (float)((screenWidth-textMoveLayouts.getWidth()-moveSteps)/8);
+
+        Log.d(TAG, "screenWidth=" + screenWidth);
+        moveStep=58; // 此处的60 是根据布局算出来的，涉及到分辨率多设备的问题，要使用单位转为进行设置
+        Log.d(TAG + "moveStep", moveStep + "");
+    }
+
     public void searchVideos() {
-        startTime.setText("0");
-        endTime.setText("11");
-        view.setBackgroundColor(Color.argb(0, 255, 255, 255));
-        totalSeconds = totalSeconds(startTimeStr, endTimeStr);
         seekbar.setEnabled(true);
-        seekbar.setMax(10);
-        seekbar.setProgress(1);
-        moveStep = (float) (((float) screenWidth / (float) 110) * 10);
+        seekbar.setMax(8);
+        Log.d("tag1", screenWidth + "");
+    }
+    private void setMyMoodIcon(int progress) {
+        imageView.setImageResource(ImageResArray.getMoodInfoIcon(progress));
+    }
+
+    @Override
+    // 触发操作，拖动
+    public void onProgressChanged(SeekBar seekBar, int progress,
+                                  boolean fromUser) {
+        moveLayout(progress);
+        Log.d(TAG + "moveLayout-getWidth", textMoveLayouts.getWidth() + "");
+        Log.d(TAG + "seekBarWidth", seekBar.getWidth() + "");
+        Log.d(TAG + "tagProgress*moveStep=", progress*moveStep + "");
+        Log.d(TAG + "moveLayout.getLeft=", textMoveLayouts.getLeft() + "");
+        setMyMoodIcon(progress);
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
 
     }
 
-    private class OnSeekBarChangeListenerImp implements
-            SeekBar.OnSeekBarChangeListener {
-
-        // 触发操作，拖动
-        public void onProgressChanged(SeekBar seekBar, int progress,
-                                      boolean fromUser) {
-            Log.d("seekBar运行时候progress=", progress + "");
-//            view.setBackgroundColor(Color.argb(progress * 10, 255, 255, 255));
-            view.layout((int) (progress * moveStep), 20, screenWidth - (int) (progress * moveStep), 80);
-//            text.layout((int) (progress * moveStep), 20, screenWidth, 80);
-
-//            text.setText(getCheckTimeBySeconds(progress, startTimeStr));
-        }
-
-        // 表示进度条刚开始拖动，开始拖动时候触发的操作
-        public void onStartTrackingTouch(SeekBar seekBar) {
-
-        }
-
-        // 停止拖动时候
-        public void onStopTrackingTouch(SeekBar seekBar) {
-            // TODO Auto-generated method stub
-        }
-    }
-
-    /**
-     * 计算连个时间之间的秒数
-     */
-
-    private static int totalSeconds(String startTime, String endTime) {
-
-        String[] st = startTime.split(":");
-        String[] et = endTime.split(":");
-
-        int st_h = Integer.valueOf(st[0]);
-        int st_m = Integer.valueOf(st[1]);
-        int st_s = Integer.valueOf(st[2]);
-
-        int et_h = Integer.valueOf(et[0]);
-        int et_m = Integer.valueOf(et[1]);
-        int et_s = Integer.valueOf(et[2]);
-
-        int totalSeconds = (et_h - st_h) * 3600 + (et_m - st_m) * 60
-                + (et_s - st_s);
-
-        return totalSeconds;
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
 
-    /**
-     * 根据当前选择的秒数还原时间点
-     */
-
-    private static String getCheckTimeBySeconds(int progress, String startTime) {
-
-        String return_h = "", return_m = "", return_s = "";
-
-        String[] st = startTime.split(":");
-
-        int st_h = Integer.valueOf(st[0]);
-        int st_m = Integer.valueOf(st[1]);
-        int st_s = Integer.valueOf(st[2]);
-
-        int h = progress / 3600;
-
-        int m = (progress % 3600) / 60;
-
-        int s = progress % 60;
-
-        if ((s + st_s) >= 60) {
-
-            int tmpSecond = (s + st_s) % 60;
-
-            m = m + 1;
-
-            if (tmpSecond >= 10) {
-                return_s = tmpSecond + "";
-            } else {
-                return_s = "0" + (tmpSecond);
-            }
-
-        } else {
-            if ((s + st_s) >= 10) {
-                return_s = s + st_s + "";
-            } else {
-                return_s = "0" + (s + st_s);
-            }
-
-        }
-
-        if ((m + st_m) >= 60) {
-
-            int tmpMin = (m + st_m) % 60;
-
-            h = h + 1;
-
-            if (tmpMin >= 10) {
-                return_m = tmpMin + "";
-            } else {
-                return_m = "0" + (tmpMin);
-            }
-
-        } else {
-            if ((m + st_m) >= 10) {
-                return_m = (m + st_m) + "";
-            } else {
-                return_m = "0" + (m + st_m);
-            }
-
-        }
-
-        if ((st_h + h) < 10) {
-            return_h = "0" + (st_h + h);
-        } else {
-            return_h = st_h + h + "";
-        }
-
-        return return_h + ":" + return_m + ":" + return_s;
+    private void moveLayout(int progress) {
+        text.layout((int) (progress * moveStep),text.getTop(),text.getWidth()+(int) (progress * moveStep),text.getBottom());
+        text.setText(progress+"");
+        textMoveLayouts.layout((int) (progress * moveStep), textMoveLayouts.getTop(), textMoveLayouts.getWidth() + (int) (progress * moveStep), textMoveLayouts.getBottom());
+        text.invalidate();
+        textMoveLayouts.invalidate();
     }
 }
