@@ -3,10 +3,12 @@ package com.example.administrator.myview.seekbar;
 import com.example.administrator.myview.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -57,6 +59,15 @@ public class SeekBarActivity extends Activity {
 
 //        measure();
         searchVideos();
+        Button button = (Button) findViewById(R.id.testMyButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(SeekBarActivity.this,FuckActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -105,10 +116,6 @@ public class SeekBarActivity extends Activity {
             setMyMood(progress);
         }
 
-        private void setMyMood(int progress) {
-            imageView.setImageResource(ImageResArray.getMoodInfoIcon(progress));
-        }
-
         // 表示进度条刚开始拖动，开始拖动时候触发的操作
         public void onStartTrackingTouch(SeekBar seekBar) {
 
@@ -119,6 +126,8 @@ public class SeekBarActivity extends Activity {
             // TODO Auto-generated method stub
         }
     }
-
+    private void setMyMood(int progress) {
+        imageView.setImageResource(ImageResArray.getMoodInfoIcon(progress));
+    }
 
 }

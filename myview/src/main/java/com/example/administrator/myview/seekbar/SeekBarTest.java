@@ -31,7 +31,7 @@ public class SeekBarTest extends Activity implements SeekBar.OnSeekBarChangeList
     /**
      * 自定义随着拖动条一起移动的空间
      */
-    private LinearLayout textMoveLayouts;
+    private RelativeLayout textMoveLayouts;
     private LinearLayout menses_mood_top;
     private LinearLayout aaaa;
     /**
@@ -47,7 +47,7 @@ public class SeekBarTest extends Activity implements SeekBar.OnSeekBarChangeList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menses_mood_dialog1);
         screenWidth = getWindowManager().getDefaultDisplay().getWidth();
-        textMoveLayouts = (LinearLayout) findViewById(R.id.menses_mood_select_layout);
+        textMoveLayouts = (RelativeLayout) findViewById(R.id.menses_mood_select_layout);
         imageView = (ImageView) findViewById(R.id.menses_mood_select);
         menses_mood_top= (LinearLayout) findViewById(R.id.menses_mood_top);
         text= new TextView(this);
@@ -124,7 +124,7 @@ public class SeekBarTest extends Activity implements SeekBar.OnSeekBarChangeList
 
     private void moveLayout(int progress) {
         text.layout((int) (progress * moveStep),text.getTop(),text.getWidth()+(int) (progress * moveStep),text.getBottom());
-        text.setText(progress+"");
+        text.setText(progress + "");
         textMoveLayouts.layout((int) (progress * moveStep), textMoveLayouts.getTop(), textMoveLayouts.getWidth() + (int) (progress * moveStep), textMoveLayouts.getBottom());
         text.invalidate();
         textMoveLayouts.invalidate();

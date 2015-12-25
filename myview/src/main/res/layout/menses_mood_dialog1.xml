@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/menses_mood_select_layout"
             android:layout_width="88dp"
             android:layout_height="94dp"
@@ -22,7 +22,7 @@
                 android:layout_height="50.5dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/seekbar_thumb"/>
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/menses_mood_bottom"
@@ -39,7 +39,7 @@
         <RelativeLayout
             android:id="@+id/menses_mood_seek_bg"
             android:layout_width="220dp"
-            android:layout_height="26dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal|center_vertical"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="9dp"
@@ -54,6 +54,8 @@
                 android:thumb="@drawable/aaass"
                 android:progressDrawable="@drawable/menses_seekbar_style"
                 android:focusable="true"
+                android:minHeight="4dp"
+                android:maxHeight="4dp"
                 android:thumbOffset="1dp"
                 />
         </RelativeLayout>

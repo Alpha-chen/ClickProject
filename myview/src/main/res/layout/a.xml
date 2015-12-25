@@ -47,6 +47,7 @@
             android:src="@drawable/ic_launcher"/>
 
         <LinearLayout
+            android:id="@+id/hahha"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="8"
@@ -75,6 +76,11 @@
             android:src="@drawable/ic_launcher"/>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/testMyButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="FUCK"/>
 </LinearLayout>
 
 
